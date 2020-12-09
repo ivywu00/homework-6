@@ -51,9 +51,7 @@ def residual(t, SV, pars, ptr, flags):
     Q_rxn = -np.sum(sdot_k*energy_k)
     Q_ohm_el = (pars.i_ext**2)*pars.R_el_an
     Q_ohm_io = (pars.i_ext**2)*pars.R_io_an
-    Q_cond = Q_cond_an*dyInv_an
-    #print(Q_cond_an)
-    
+    Q_cond = Q_cond_an/pars.H_an
     Q_rad = pars.A_ext*sigma*pars.emmissivity*((pars.T_amb**4)-(SV[ptr.T_an]**4))
     Q_conv = pars.h_conv*pars.A_ext*(pars.T_amb-SV[ptr.T_an])
     
@@ -87,7 +85,7 @@ def residual(t, SV, pars, ptr, flags):
     Q_rxn =0
     Q_ohm_el = 0
     Q_ohm_io = (pars.i_ext**2)*pars.R_io_elyte
-    Q_cond = (Q_cond_ca*dyInv_ca)-(Q_cond_an*dyInv_an)
+    Q_cond = (Q_cond_ca/pars.H_ca)-(Q_cond_an/pars.H_an)
     Q_rad =  pars.A_ext*sigma*pars.emmissivity*((pars.T_amb**4)-(SV[ptr.T_elyte]**4))
     Q_conv = pars.h_conv*pars.A_ext*(pars.T_amb-SV[ptr.T_elyte])
     """
@@ -127,7 +125,7 @@ def residual(t, SV, pars, ptr, flags):
     Q_rxn = - np.sum(sdot_k*energy_k)
     Q_ohm_el = (pars.i_ext**2)*pars.R_el_ca
     Q_ohm_io = (pars.i_ext**2)*pars.R_io_ca
-    Q_cond = -Q_cond_ca*dyInv_ca
+    Q_cond = -Q_cond_ca/pars.H_ca
     Q_rad = pars.A_ext*sigma*pars.emmissivity*((pars.T_amb**4)-(SV[ptr.T_ca]**4))
     Q_conv = pars.h_conv*pars.A_ext*(pars.T_amb-SV[ptr.T_ca])
     """
